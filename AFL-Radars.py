@@ -458,6 +458,9 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
 ########################################################################
 ########################################################################
 
+st.title("Footy Radars :rugby_football:")
+st.header("All data via AFL")
+
 avail_data = pd.read_csv(f"https://raw.githubusercontent.com/griffisben/AFL-Radars/refs/heads/main/AvailableData.csv")
 
 with st.sidebar:
