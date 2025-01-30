@@ -11,6 +11,8 @@ matplotlib.rcParams.update(matplotlib.rcParamsDefault)
 import urllib.request
 from highlight_text import fig_text
 import streamlit as st
+import warnings
+warnings.filterwarnings('ignore')
 
 def get_label_rotation(angle, offset):
     # Rotation must be specified in degrees :(
@@ -89,11 +91,12 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
     df = pd.read_csv(f"https://raw.githubusercontent.com/griffisben/AFL-Radars/refs/heads/main/Player-Data/{league}/{season}.csv")
     df = df.dropna(subset=['player_position']).reset_index(drop=True)
     df['possessions'] = df['contested_possessions']+df['uncontested_possessions']
-    df['kick_efficiency'] = df['effective_kicks']/df['kicks']*100
-    df['handball_efficiency'] = (df['effective_disposals']-df['effective_kicks'])/df['handballs']*100
+    if league == 'AFL':
+        df['kick_efficiency'] = df['effective_kicks']/df['kicks']*100
+        df['handball_efficiency'] = (df['effective_disposals']-df['effective_kicks'])/df['handballs']*100
+        df['hitout_efficiency'] = df['hitouts_to_advantage']/df['hitouts']*100
     df['pct_contested_poss'] = df['contested_possessions']/(df['possessions'])*100
     df['pct_marks_contested'] = df['contested_marks']/(df['marks'])*100
-    df['hitout_efficiency'] = df['hitouts_to_advantage']/df['hitouts']*100
     df['points'] = (df['goals']*6)+(df['behinds'])
     df['points_per_shot'] = df['points']/df['shots_at_goal']
     df['points_per_shot'] = [0 if df['shots_at_goal'][i]==0 else df['points'][i]/df['shots_at_goal'][i] for i in range(len(df))]
@@ -168,27 +171,50 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
     pic = pic.replace(" ","%20")
     team_pic = logo_df[logo_df['team']==team].logo_url.values[0]
 
-    dfRadarMF = dfRadarMF[["player_name",
-                           'goals_pct','behinds_pct','shots_at_goal_pct','points_per_shot_pct','goal_assists_pct','score_involvements_pct',
-                           'kicks_pct','handballs_pct','kick_efficiency_pct','handball_efficiency_pct','rebounds_pct','inside_fifties_pct','possessions_pct','pct_contested_poss_pct','metres_gained_pct',
-                           'marks_pct','pct_marks_contested_pct','marks_inside_fifty_pct','intercept_marks_pct','marks_on_lead_pct','free_kicks_for_pct',
-                           'spoils_pct','tackles_pct','tackles_inside_fifty_pct','ground_ball_gets_pct','intercepts_pct','clearances_pct','pressure_acts_pct','score_launches_pct','one_percenters_pct',
-                           'clangers_pct','turnovers_pct','free_kicks_against_pct',
-                           ]]
-    raw_vals = raw_valsdf[["player_name",
-                           'goals','behinds','shots_at_goal','points_per_shot','goal_assists','score_involvements',
-                           'kicks','handballs','kick_efficiency','handball_efficiency','rebounds','inside_fifties','possessions','pct_contested_poss','metres_gained',
-                           'marks','pct_marks_contested','marks_inside_fifty','intercept_marks','marks_on_lead','free_kicks_for',
-                           'spoils','tackles','tackles_inside_fifty','ground_ball_gets','intercepts','clearances','pressure_acts','score_launches','one_percenters',
-                           'clangers','turnovers','free_kicks_against',
-                           ]]
-    raw_vals_full = raw_valsdf_full[["player_name",
-                           'goals','behinds','shots_at_goal','points_per_shot','goal_assists','score_involvements',
-                           'kicks','handballs','kick_efficiency','handball_efficiency','rebounds','inside_fifties','possessions','pct_contested_poss','metres_gained',
-                           'marks','pct_marks_contested','marks_inside_fifty','intercept_marks','marks_on_lead','free_kicks_for',
-                           'spoils','tackles','tackles_inside_fifty','ground_ball_gets','intercepts','clearances','pressure_acts','score_launches','one_percenters',
-                           'clangers','turnovers','free_kicks_against',
-                           ]]
+    if league == 'AFL':
+        dfRadarMF = dfRadarMF[["player_name",
+                               'goals_pct','behinds_pct','shots_at_goal_pct','points_per_shot_pct','goal_assists_pct','score_involvements_pct',
+                               'kicks_pct','handballs_pct','kick_efficiency_pct','handball_efficiency_pct','rebounds_pct','inside_fifties_pct','possessions_pct','pct_contested_poss_pct','metres_gained_pct',
+                               'marks_pct','pct_marks_contested_pct','marks_inside_fifty_pct','intercept_marks_pct','marks_on_lead_pct','free_kicks_for_pct',
+                               'spoils_pct','tackles_pct','tackles_inside_fifty_pct','ground_ball_gets_pct','intercepts_pct','clearances_pct','pressure_acts_pct','score_launches_pct','one_percenters_pct',
+                               'clangers_pct','turnovers_pct','free_kicks_against_pct',
+                               ]]
+        raw_vals = raw_valsdf[["player_name",
+                               'goals','behinds','shots_at_goal','points_per_shot','goal_assists','score_involvements',
+                               'kicks','handballs','kick_efficiency','handball_efficiency','rebounds','inside_fifties','possessions','pct_contested_poss','metres_gained',
+                               'marks','pct_marks_contested','marks_inside_fifty','intercept_marks','marks_on_lead','free_kicks_for',
+                               'spoils','tackles','tackles_inside_fifty','ground_ball_gets','intercepts','clearances','pressure_acts','score_launches','one_percenters',
+                               'clangers','turnovers','free_kicks_against',
+                               ]]
+        raw_vals_full = raw_valsdf_full[["player_name",
+                               'goals','behinds','shots_at_goal','points_per_shot','goal_assists','score_involvements',
+                               'kicks','handballs','kick_efficiency','handball_efficiency','rebounds','inside_fifties','possessions','pct_contested_poss','metres_gained',
+                               'marks','pct_marks_contested','marks_inside_fifty','intercept_marks','marks_on_lead','free_kicks_for',
+                               'spoils','tackles','tackles_inside_fifty','ground_ball_gets','intercepts','clearances','pressure_acts','score_launches','one_percenters',
+                               'clangers','turnovers','free_kicks_against',
+                               ]]
+    if league != 'AFL':
+        dfRadarMF = dfRadarMF[["player_name",
+                               'goals_pct','behinds_pct','shots_at_goal_pct','points_per_shot_pct','goal_assists_pct','score_involvements_pct',
+                               'kicks_pct','handballs_pct','rebounds_pct','inside_fifties_pct','possessions_pct','pct_contested_poss_pct','metres_gained_pct',
+                               'marks_pct','pct_marks_contested_pct','marks_inside_fifty_pct','free_kicks_for_pct',
+                               'tackles_pct','tackles_inside_fifty_pct','intercepts_pct','clearances_pct','one_percenters_pct',
+                               'clangers_pct','turnovers_pct','free_kicks_against_pct',
+                               ]]
+        raw_vals = raw_valsdf[["player_name",
+                               'goals','behinds','shots_at_goal','points_per_shot','goal_assists','score_involvements',
+                               'kicks','handballs','rebounds','inside_fifties','possessions','pct_contested_poss','metres_gained',
+                               'marks','pct_marks_contested','marks_inside_fifty','free_kicks_for',
+                               'tackles','tackles_inside_fifty','intercepts','clearances','one_percenters',
+                               'clangers','turnovers','free_kicks_against',
+                               ]]
+        raw_vals_full = raw_valsdf_full[["player_name",
+                               'goals','behinds','shots_at_goal','points_per_shot','goal_assists','score_involvements',
+                               'kicks','handballs','rebounds','inside_fifties','possessions','pct_contested_poss','metres_gained',
+                               'marks','pct_marks_contested','marks_inside_fifty','free_kicks_for',
+                               'tackles','tackles_inside_fifty','intercepts','clearances','one_percenters',
+                               'clangers','turnovers','free_kicks_against',
+                               ]]
     dfRadarMF.rename(columns={'goals_pct':'Goals',
                             'behinds_pct':'Behinds',
                               'shots_at_goal_pct':'Shots',
@@ -197,8 +223,8 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
                             'score_involvements_pct':'Score\nInvolves',
                             'kicks_pct':'Kicks',
                             'handballs_pct':'Handballs',
-                            'kick_efficiency_pct':'Kick\nSucc %',
-                            'handball_efficiency_pct':'Handball\nSucc %',
+                            'kick_efficiency_pct':'Kick\nEff %',
+                            'handball_efficiency_pct':'Handball\nEff %',
                             'rebounds_pct':'Rebound\n50s',
                             'inside_fifties_pct':'Inside\n50s',
                             'possessions_pct':'Poss.',
@@ -237,18 +263,30 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
     df1 = df1.rename(columns={'player_name': 'Metric',
                         name: 'Value',
                              'index': 'Group'})
-    for i in range(len(df1)):
-        if df1['Group'][i] <= 6:
-            df1['Group'][i] = 'Scoring'
-        elif df1['Group'][i] <= 15:
-            df1['Group'][i] = 'Possession'
-        elif df1['Group'][i] <= 21:
-            df1['Group'][i] = 'Marks'
-        elif df1['Group'][i] <= 30:
-            df1['Group'][i] = 'Defense'
-        elif df1['Group'][i] <= 33:
-            df1['Group'][i] = 'Bad'
-
+    if league == 'AFL':
+        for i in range(len(df1)):
+            if df1['Group'][i] <= 6:
+                df1['Group'][i] = 'Scoring'
+            elif df1['Group'][i] <= 15:
+                df1['Group'][i] = 'Possession'
+            elif df1['Group'][i] <= 21:
+                df1['Group'][i] = 'Marks'
+            elif df1['Group'][i] <= 30:
+                df1['Group'][i] = 'Defense'
+            elif df1['Group'][i] <= 33:
+                df1['Group'][i] = 'Bad'
+    if league != 'AFL':
+        for i in range(len(df1)):
+            if df1['Group'][i] <= 6:
+                df1['Group'][i] = 'Scoring'
+            elif df1['Group'][i] <= 13:
+                df1['Group'][i] = 'Possession'
+            elif df1['Group'][i] <= 17:
+                df1['Group'][i] = 'Marks'
+            elif df1['Group'][i] <= 22:
+                df1['Group'][i] = 'Defense'
+            elif df1['Group'][i] <= 25:
+                df1['Group'][i] = 'Bad'
 
     #####################################################################
     
@@ -271,8 +309,11 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
     offset = 0
     IDXS = []
 
-    GROUPS_SIZE = [6,9,6,9,3]  # Attacker template
-
+    if league == 'AFL':
+        GROUPS_SIZE = [6,9,6,9,3]  # Attacker template
+    if league != 'AFL':
+        GROUPS_SIZE = [6,7,4,5,3]  # Attacker template
+        
     for size in GROUPS_SIZE:
         IDXS += list(range(offset + PAD, offset + size + PAD))
         offset += size + PAD
