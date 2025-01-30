@@ -464,12 +464,17 @@ st.caption("All data via AFL")
 with st.expander('Instructions'): 
     st.write("""
     _Welcome to Footy Radars! This app allows you to generate statistical performance images for AFL players, benchmarked against the rest of the competition_  \n  \n
-    **On the sidebar:**  \n
+    **Sidebar:**  \n
     1) Choose the league (AFL only for now, but I'm working on adding AFLW & VFL)  \n
     2) Select your desired season  \n
     3) Set the minimum time on ground % for players to have played to be included  \n  \n
-    **On the Player Radar tab:**  \n
-    1) Choose the positions to benchmark against (leave blank for all players, or choose 1 or more positions to _only_ include those)
+    **Player Radar Tab:**  \n
+    1) Choose the positions to benchmark against (leave blank for all players, or choose 1 or more positions to _only_ include those position - no matter what position(s) you choose, the player you select will be included)  \n
+    2) Decide if you want the data labels to be per game (per 80 minutes) numbers for each metric, or the player's percentile rank  \n
+    3) Colors! You can choose to color the bars by the benchmarking percentiles (Elite, Above Average, Average, Below Average - the same colors & logic as on the AFL website) or by metric groups (scoring, disposals, marking, defense, misc.)  \n
+    4) Choose whether you want the distribution lines (mean & standard deviation) for each metric to be added to each bar. Note: this can be helpful, but be aware that not all metrics will have a normal distribution  \n  \n
+    **All Players List Tab**  \n
+    This tab simply has the list of every player from the league & season you've selected. You can use this to find the specific player's name you want to generate a radar for, and also double check their time on ground %
 """)
 
 avail_data = pd.read_csv(f"https://raw.githubusercontent.com/griffisben/AFL-Radars/refs/heads/main/AvailableData.csv")
