@@ -528,9 +528,8 @@ with st.expander('Instructions'):
     **Player Radar Tab:**  \n
     1) Choose the positions to benchmark against (leave blank for all players, or choose 1 or more positions to _only_ include those position - no matter what position(s) you choose, the player you select will be included)  \n
     2) Decide if you want the data labels to be per game (per 80 minutes) numbers for each metric, or the player's percentile rank  \n
-    3) Colors! You can choose to color the bars by the benchmarking percentiles (Elite, Above Average, Average, Below Average - the same colors & logic as on the AFL website) or by metric groups (scoring, disposals, marking, defense, misc.)  \n
-    4) Choose whether you want the distribution lines (mean & standard deviation) for each metric to be added to each bar. Note: this can be helpful, but be aware that not all metrics will have a normal distribution  \n
-    5) Click the radar generation button to create your player's visual. You can right-click & save the image to use it for personal use (just make sure not to edit the picture to remove my signature, and please link people to this app!)  \n  \n
+    3) Choose whether you want the distribution lines (mean & standard deviation) for each metric to be added to each bar. Note: this can be helpful, but be aware that not all metrics will have a normal distribution  \n
+    4) Click the radar generation button to create your player's visual. You can right-click & save the image to use it for personal use (just make sure not to edit the picture to remove my signature, and please link people to this app!)  \n  \n
     **All Players List Tab**  \n
     This tab simply has the list of every player from the league & season you've selected. You can use this to find the specific player's name you want to generate a radar for, and also double check their time on ground %
 """)
@@ -553,7 +552,6 @@ with radar_tab:
         if pos == []:
             pos = None
         callout = st.selectbox('Data Labels: Per Game or Percentiles?', ['Per Game','Percentile'])
-        bar_colors = st.selectbox('Bar Coloring Scheme: Benchmarking Percentiles or Metric Groups?', ['Benchmarking Percentiles','Metric Groups'])
         dist_labels = st.selectbox('Distribution Labels on Bars?', ['Yes','No'])
         name = st.text_input("Player", "")
         submitted = st.form_submit_button("Generate Radar!")
@@ -566,7 +564,7 @@ with radar_tab:
                      name = name,
                      sig = 'Created by Ben Griffis (@BeGriffis)',
                      callout = callout, # Percentile | Per Game
-                     bar_colors = bar_colors,  ## Benchmarking Percentiles | Metric Groups
+                     bar_colors = 'Benchmarking Percentiles',  ## Benchmarking Percentiles | Metric Groups
                      dist_labels = dist_labels,
                      extra_text = f' | {extra_text}',
                     )
