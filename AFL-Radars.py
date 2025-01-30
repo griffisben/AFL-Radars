@@ -6,8 +6,6 @@ from scipy import stats
 from statistics import mean, harmonic_mean
 from math import pi
 sns.set_style("white")
-import warnings
-warnings.filterwarnings('ignore')
 import matplotlib
 matplotlib.rcParams.update(matplotlib.rcParamsDefault)
 import urllib.request
