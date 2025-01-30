@@ -638,7 +638,7 @@ with scatter_tab:
         text = 'Player',
         hover_data=['Team', 'Position(s)', 'TOG%'],
         hover_name = 'Player',
-        title = f'{season} {league}, {xx} & {yy}<br><sup>{compares}, minimum {mins}% Time On Ground<br>{extra_text} | Created on footy-radars.streamlit.app</sup>',
+        title = f'{season} {league}, {xx} & {yy}<br><sup>{compares}, minimum {mins}% Time On Ground<br>Values are per 80 minutes played | {extra_text} | Created on footy-radars.streamlit.app</sup>',
         width=900,
         height=700)
     fig_scatter.update_traces(textposition='top right', marker=dict(size=10, line=dict(width=1, color='black')))
