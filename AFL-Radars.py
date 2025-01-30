@@ -574,5 +574,5 @@ with radar_tab:
 
 with all_players_tab:
     df = pd.read_csv(f"https://raw.githubusercontent.com/griffisben/AFL-Radars/refs/heads/main/Player-Data/{league}/{season}.csv")
-    df = df[['player_name','player_team','player_position','games_played','PctOfSeason','afl_fantasy_score']].rename(columns={'player_name':'Player','player_team':'Team','player_position':'Position(s)','games_played':'Games','PctOfSeason':'TOG%','afl_fantasy_score':'AFL Fantasy Score'})
+    df = df[['player_name','player_team','player_position','games_played','PctOfSeason','afl_fantasy_score']].rename(columns={'player_name':'Player','player_team':'Team','player_position':'Position(s)','games_played':'Games','PctOfSeason':'TOG%','afl_fantasy_score':'AFL Fantasy Score per game'})
     df
