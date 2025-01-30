@@ -605,9 +605,9 @@ with scatter_tab:
         submitted = st.form_submit_button("Submit Options")
 
         scatter_pos = st.multiselect('Positions to Include (leave blank for all)', ['Full-Forward','Forward Pocket','Centre Half-Forward','Half-Forward','Wing','Centre','Ruck-Rover','Rover','Ruck','Half-Back','Centre Half-Back','Back-Pocket','Full-Back'])
-        xx = st.selectbox('X-Axis Variable', scatter_df.columns[6:len(scatter_df.columns)-1].tolist(), index=0)
-        yy = st.selectbox('Y-Axis Variable', scatter_df.columns[6:len(scatter_df.columns)-1].tolist(), index=25)
-        cc = st.selectbox('Point Color Variable', scatter_df.columns[6:len(scatter_df.columns)-1].tolist(), index=0)
+        xx = st.selectbox('X-Axis Variable', scatter_df.columns[6:].tolist().remove('80sr'), index=0)
+        yy = st.selectbox('Y-Axis Variable', scatter_df.columns[6:].tolist().remove('80sr'), index=25)
+        cc = st.selectbox('Point Color Variable', scatter_df.columns[6:].tolist().remove('80sr'), index=0)
         cscale = st.selectbox('Point Colorscale', colorscales, index=78)
 
     if scatter_pos == []:
