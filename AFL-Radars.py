@@ -472,7 +472,8 @@ with st.expander('Instructions'):
     1) Choose the positions to benchmark against (leave blank for all players, or choose 1 or more positions to _only_ include those position - no matter what position(s) you choose, the player you select will be included)  \n
     2) Decide if you want the data labels to be per game (per 80 minutes) numbers for each metric, or the player's percentile rank  \n
     3) Colors! You can choose to color the bars by the benchmarking percentiles (Elite, Above Average, Average, Below Average - the same colors & logic as on the AFL website) or by metric groups (scoring, disposals, marking, defense, misc.)  \n
-    4) Choose whether you want the distribution lines (mean & standard deviation) for each metric to be added to each bar. Note: this can be helpful, but be aware that not all metrics will have a normal distribution  \n  \n
+    4) Choose whether you want the distribution lines (mean & standard deviation) for each metric to be added to each bar. Note: this can be helpful, but be aware that not all metrics will have a normal distribution  \n
+    5) Click the radar generation button to create your player's visual. You can right-click & save the image to use it for personal use (just make sure not to edit the picture to remove my signature, and please link people to this app!)  \n  \n
     **All Players List Tab**  \n
     This tab simply has the list of every player from the league & season you've selected. You can use this to find the specific player's name you want to generate a radar for, and also double check their time on ground %
 """)
