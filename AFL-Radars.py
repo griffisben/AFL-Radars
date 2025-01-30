@@ -464,12 +464,12 @@ st.caption("All data via AFL")
 with st.expander('Instructions'): 
     st.write("""
     _Welcome to Footy Radars! This app allows you to generate statistical performance images for AFL players, benchmarked against the rest of the competition_  \n  \n
-    On the sidebar:  \n
-    **1)** Choose the league (AFL only for now, but I'm working on adding AFLW & VFL)  \n
-    **2)** Select your desired season  \n
-    **3)** Set the minimum time on ground % for players to have played  \n  \n
-    On the Player Radar tab:  \n
-    **1)** 
+    **On the sidebar:**  \n
+    1) Choose the league (AFL only for now, but I'm working on adding AFLW & VFL)  \n
+    2) Select your desired season  \n
+    3) Set the minimum time on ground % for players to have played  \n  \n
+    **On the Player Radar tab:**  \n
+    1) 
 """)
 
 avail_data = pd.read_csv(f"https://raw.githubusercontent.com/griffisben/AFL-Radars/refs/heads/main/AvailableData.csv")
