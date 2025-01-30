@@ -586,7 +586,7 @@ with all_players_tab:
 
 with scatter_tab:
     scatter_df = pd.read_csv(f"https://raw.githubusercontent.com/griffisben/AFL-Radars/refs/heads/main/Player-Data/{league}/{season}.csv")
-    scatter_df.rename(columns={'player_name':'Player','player_team':'Team','player_position':'Position(s)'})
+    scatter_df.rename(columns={'player_name':'Player','player_team':'Team','player_position':'Position(s)'},inplace=True)
     scatter_df = scatter_df[scatter_df['PctOfSeason']>=mins/100]
     
     with st.form("Scatter Options"):
