@@ -13,6 +13,13 @@ from highlight_text import fig_text
 import streamlit as st
 import warnings
 warnings.filterwarnings('ignore')
+import plotly.express as px
+import plotly.figure_factory as ff
+from plotly.graph_objects import Layout
+
+colorscales = px.colors.named_colorscales()
+colorscales2 = [f"{cc}_r" for cc in colorscales]
+colorscales += colorscales2
 
 def get_label_rotation(angle, offset):
     # Rotation must be specified in degrees :(
@@ -544,7 +551,7 @@ with st.sidebar:
 extra_text = avail_data[(avail_data.Competition==league) & (avail_data.Season==season)].DataTime.values[0]
 
 
-radar_tab, all_players_tab = st.tabs(['Player Radar', 'All Players List'])
+radar_tab, all_players_tab, scatter_tab = st.tabs(['Player Radar', 'All Players List', 'Scatter Plots'])
 
 with radar_tab:
     with st.form('Radar Options'):
@@ -576,3 +583,52 @@ with all_players_tab:
     df = pd.read_csv(f"https://raw.githubusercontent.com/griffisben/AFL-Radars/refs/heads/main/Player-Data/{league}/{season}.csv")
     df = df[['player_name','player_team','player_position','games_played','PctOfSeason','afl_fantasy_score']].rename(columns={'player_name':'Player','player_team':'Team','player_position':'Position(s)','games_played':'Games','PctOfSeason':'TOG%','afl_fantasy_score':'AFL Fantasy Score per game'})
     df
+
+with scatter_tab:
+    scatter_df = pd.read_csv(f"https://raw.githubusercontent.com/griffisben/AFL-Radars/refs/heads/main/Player-Data/{league}/{season}.csv")
+    scatter_df.rename(columns={'player_name':'Player','player_team':'Team','player_position':'Position(s)'})
+    scatter_df = scatter_df[scatter_df['PctOfSeason']>=mins/100]
+    
+    with st.form("Scatter Options"):
+        submitted = st.form_submit_button("Submit Options")
+
+        scatter_pos = st.multiselect('Positions to Include (leave blank for all)', ['Full-Forward','Forward Pocket','Centre Half-Forward','Half-Forward','Wing','Centre','Ruck-Rover','Rover','Ruck','Half-Back','Centre Half-Back','Back-Pocket','Full-Back'])
+        
+        xx = st.selectbox('X-Axis Variable', scatter_df.columns[6:len(scatter_df.columns)-1].tolist(), index=0)
+        yy = st.selectbox('Y-Axis Variable', scatter_df.columns[6:len(scatter_df.columns)-1].tolist(), index=25)
+        cc = st.selectbox('Point Color Variable', scatter_df.columns[6:len(scatter_df.columns)-1].tolist(), index=0)
+        cscale = st.selectbox('Point Colorscale', colorscales, index=78)
+
+        
+    if scatter_pos == None:
+        compares = 'All Players'
+    else:
+        pattern = r'(^|, )(' + '|'.join(pos) + r')($|, )'
+        dfProspect_scatter = scatter_df[scatter_df['Position(s)'].str.contains(pattern, regex=True)]
+        if len(scatter_pos) > 2:
+            compares = f"{', '.join(pos[:-1])}, and {pos[-1]}"
+        elif len(scatter_pos) == 2:
+            compares = f"{pos[0]} and {pos[1]}"
+        elif len(scatter_pos) == 1:
+            compares = f"{pos[0]}"
+        else:
+            compares = f"{scatter_pos}s"
+
+    fig_scatter = px.scatter(
+        dfProspect_scatter,
+        x = xx,
+        y = yy,
+        color = cc,
+        color_continuous_scale = cscale,
+        text = 'Player',
+        hover_data=['Team', 'Position(s)', 'Minutes played'],
+        hover_name = 'Player',
+        title = f'{season} {league}, {xx} & {yy}<br><sup>{compares}, minimum {mins}% Time On Ground<br>{extra_text} | Created on footy-radars.streamlit.app</sup>' %(season,lg,xx,yy,age_text_scatter,pos_select_scatter,mins,update_date),
+        width=900,
+        height=700)
+    fig_scatter.update_traces(textposition='top right', marker=dict(size=10, line=dict(width=1, color='black')))
+    
+    fig_scatter.add_hline(y=dfProspect_scatter[yy].median(), name='Median', line_width=0.5, ls='--')
+    fig_scatter.add_vline(x=dfProspect_scatter[xx].median(), name='Median', line_width=0.5, ls='--')
+    
+    st.plotly_chart(fig_scatter, theme=None, use_container_width=False)
