@@ -603,7 +603,7 @@ with scatter_tab:
     if scatter_pos == None:
         compares = 'All Players'
     else:
-        pattern = r'(^|, )(' + '|'.join(pos) + r')($|, )'
+        pattern = r'(^|, )(' + '|'.join(scatter_pos) + r')($|, )'
         dfProspect_scatter = scatter_df[scatter_df['Position(s)'].str.contains(pattern, regex=True)]
         if len(scatter_pos) > 2:
             compares = f"{', '.join(pos[:-1])}, and {pos[-1]}"
