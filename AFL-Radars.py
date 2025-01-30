@@ -606,11 +606,11 @@ with scatter_tab:
         pattern = r'(^|, )(' + '|'.join(scatter_pos) + r')($|, )'
         scatter_df = scatter_df[scatter_df['Position(s)'].str.contains(pattern, regex=True)]
         if len(scatter_pos) > 2:
-            compares = f"{', '.join(pos[:-1])}, and {pos[-1]}"
+            compares = f"{', '.join(scatter_pos[:-1])}, and {scatter_pos[-1]}"
         elif len(scatter_pos) == 2:
-            compares = f"{pos[0]} and {pos[1]}"
+            compares = f"{scatter_pos[0]} and {scatter_pos[1]}"
         elif len(scatter_pos) == 1:
-            compares = f"{pos[0]}"
+            compares = f"{scatter_pos[0]}"
         else:
             compares = f"{scatter_pos}s"
 
