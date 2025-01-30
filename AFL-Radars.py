@@ -118,7 +118,6 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
     # Filter data
     dfProspect = df[df['PctOfSeason']>=mins/100]
     fallback_raw_valsdf = dfProspect[(dfProspect['player_name']==name)]
-    st.write(fallback_raw_valsdf)
     team = fallback_raw_valsdf.player_team.values[0]
 
     if pos == None:
