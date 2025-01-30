@@ -604,7 +604,7 @@ with scatter_tab:
         compares = 'All Players'
     else:
         pattern = r'(^|, )(' + '|'.join(scatter_pos) + r')($|, )'
-        dfProspect_scatter = scatter_df[scatter_df['Position(s)'].str.contains(pattern, regex=True)]
+        scatter_df = scatter_df[scatter_df['Position(s)'].str.contains(pattern, regex=True)]
         if len(scatter_pos) > 2:
             compares = f"{', '.join(pos[:-1])}, and {pos[-1]}"
         elif len(scatter_pos) == 2:
@@ -615,7 +615,7 @@ with scatter_tab:
             compares = f"{scatter_pos}s"
 
     fig_scatter = px.scatter(
-        dfProspect_scatter,
+        scatter_df,
         x = xx,
         y = yy,
         color = cc,
