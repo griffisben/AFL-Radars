@@ -467,9 +467,9 @@ with st.expander('Instructions'):
     **On the sidebar:**  \n
     1) Choose the league (AFL only for now, but I'm working on adding AFLW & VFL)  \n
     2) Select your desired season  \n
-    3) Set the minimum time on ground % for players to have played  \n  \n
+    3) Set the minimum time on ground % for players to have played to be included  \n  \n
     **On the Player Radar tab:**  \n
-    1) 
+    1) Choose the positions to benchmark against (leave blank for all players, or choose 1 or more positions to _only_ include those)
 """)
 
 avail_data = pd.read_csv(f"https://raw.githubusercontent.com/griffisben/AFL-Radars/refs/heads/main/AvailableData.csv")
