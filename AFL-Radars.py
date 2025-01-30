@@ -600,14 +600,17 @@ with scatter_tab:
     scatter_df.rename(columns={'player_name':'Player','player_team':'Team','player_position':'Position(s)','PctOfSeason':'TOG%','games_played':'Games Played','kicks':'Kicks','marks':'Marks','handballs':'Handballs','disposals':'Disposals','effective_disposals':'Effective Disposals','goals':'Goals','behinds':'Behinds','hitouts':'Hitouts','tackles':'Tackles','rebounds':'Rebounds','inside_fifties':'Inside Fifties','clearances':'Clearances','clangers':'Clangers','free_kicks_for':'Free Kicks For','free_kicks_against':'Free Kicks Against','contested_possessions':'Contested Possessions','uncontested_possessions':'Uncontested Possessions','contested_marks':'Contested Marks','marks_inside_fifty':'Marks Inside Fifty','one_percenters':'One Percenters','bounces':'Bounces','goal_assists':'Goal Assists','afl_fantasy_score':'Afl Fantasy Score','centre_clearances':'Centre Clearances','stoppage_clearances':'Stoppage Clearances','score_involvements':'Score Involvements','metres_gained':'Metres Gained','turnovers':'Turnovers','intercepts':'Intercepts','tackles_inside_fifty':'Tackles Inside Fifty','contest_def_losses':'Contest Def Losses','contest_def_one_on_ones':'Contest Def One On Ones','contest_off_one_on_ones':'Contest Off One On Ones','contest_off_wins':'Contest Off Wins','def_half_pressure_acts':'Def Half Pressure Acts','effective_kicks':'Effective Kicks','f50_ground_ball_gets':'F50 Ground Ball Gets','ground_ball_gets':'Ground Ball Gets','hitouts_to_advantage':'Hitouts To Advantage','intercept_marks':'Intercept Marks','marks_on_lead':'Marks On Lead','pressure_acts':'Pressure Acts','rating_points':'Rating Points','ruck_contests':'Ruck Contests','score_launches':'Score Launches','shots_at_goal':'Shots At Goal','spoils':'Spoils'},
                       inplace=True)
     scatter_df = scatter_df[scatter_df['TOG%']>=mins/100]
+
+    vars = scatter_df.columns[6:].tolist()
+    vars.remove('80sr')
     
     with st.form("Scatter Options"):
         submitted = st.form_submit_button("Submit Options")
 
         scatter_pos = st.multiselect('Positions to Include (leave blank for all)', ['Full-Forward','Forward Pocket','Centre Half-Forward','Half-Forward','Wing','Centre','Ruck-Rover','Rover','Ruck','Half-Back','Centre Half-Back','Back-Pocket','Full-Back'])
-        xx = st.selectbox('X-Axis Variable', scatter_df.columns[6:].tolist().remove('80sr'), index=0)
-        yy = st.selectbox('Y-Axis Variable', scatter_df.columns[6:].tolist().remove('80sr'), index=25)
-        cc = st.selectbox('Point Color Variable', scatter_df.columns[6:].tolist().remove('80sr'), index=0)
+        xx = st.selectbox('X-Axis Variable', vars, index=0)
+        yy = st.selectbox('Y-Axis Variable', vars, index=25)
+        cc = st.selectbox('Point Color Variable', vars, index=0)
         cscale = st.selectbox('Point Colorscale', colorscales, index=78)
 
     if scatter_pos == []:
