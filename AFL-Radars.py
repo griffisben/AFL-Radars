@@ -591,7 +591,7 @@ with scatter_tab:
         df['Kick Efficiency'] = df['effective_kicks']/df['kicks']*100
         df['Handball Efficiency'] = (df['effective_disposals']-df['effective_kicks'])/df['handballs']*100
         df['Hitout Efficiency'] = df['hitouts_to_advantage']/df['hitouts']*100
-    df['% of Possessions Contested'] = df['contested_possessions']/(df['possessions'])*100
+    df['% of Possessions Contested'] = df['contested_possessions']/(df['Possessions'])*100
     df['% of Marks Contested'] = df['contested_marks']/(df['marks'])*100
     df['Points'] = (df['goals']*6)+(df['behinds'])
     df['Points per Shot'] = df['points']/df['shots_at_goal']
