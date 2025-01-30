@@ -1,0 +1,10 @@
+seaborn
+pandas
+matplotlib
+numpy
+scipy
+statistics
+math
+warnings
+urllib
+highlihght-text
