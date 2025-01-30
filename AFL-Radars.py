@@ -586,7 +586,7 @@ with all_players_tab:
 
 with scatter_tab:
     scatter_df = pd.read_csv(f"https://raw.githubusercontent.com/griffisben/AFL-Radars/refs/heads/main/Player-Data/{league}/{season}.csv")
-    scatter_df.rename(columns={'player_name':'Player','player_team':'Team','player_position':'Position(s)'},inplace=True)
+    scatter_df.rename(columns={'player_name':'Player','player_team':'Team','player_position':'Position(s)','PctOfSeason':'TOG%'},inplace=True)
     scatter_df = scatter_df[scatter_df['PctOfSeason']>=mins/100]
     
     with st.form("Scatter Options"):
@@ -621,7 +621,7 @@ with scatter_tab:
         color = cc,
         color_continuous_scale = cscale,
         text = 'Player',
-        hover_data=['Team', 'Position(s)', 'Minutes played'],
+        hover_data=['Team', 'Position(s)', 'TOG%'],
         hover_name = 'Player',
         title = f'{season} {league}, {xx} & {yy}<br><sup>{compares}, minimum {mins}% Time On Ground<br>{extra_text} | Created on footy-radars.streamlit.app</sup>',
         width=900,
