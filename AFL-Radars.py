@@ -628,7 +628,7 @@ with scatter_tab:
         height=700)
     fig_scatter.update_traces(textposition='top right', marker=dict(size=10, line=dict(width=1, color='black')))
     
-    fig_scatter.add_hline(y=dfProspect_scatter[yy].median(), name='Median', line_width=0.5, ls='--')
-    fig_scatter.add_vline(x=dfProspect_scatter[xx].median(), name='Median', line_width=0.5, ls='--')
+    fig_scatter.add_hline(y=dfProspect_scatter[yy].median(), name='Median', line_width=0.5, line_style='--')
+    fig_scatter.add_vline(x=dfProspect_scatter[xx].median(), name='Median', line_width=0.5, line_style='--')
     
     st.plotly_chart(fig_scatter, theme=None, use_container_width=False)
