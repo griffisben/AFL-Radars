@@ -586,16 +586,16 @@ with all_players_tab:
 
 with scatter_tab:
     df = pd.read_csv(f"https://raw.githubusercontent.com/griffisben/AFL-Radars/refs/heads/main/Player-Data/{league}/{season}.csv")
-    df['possessions'] = df['contested_possessions']+df['uncontested_possessions']
+    df['Possessions'] = df['contested_possessions']+df['uncontested_possessions']
     if league == 'AFL':
-        df['kick_efficiency'] = df['effective_kicks']/df['kicks']*100
-        df['handball_efficiency'] = (df['effective_disposals']-df['effective_kicks'])/df['handballs']*100
-        df['hitout_efficiency'] = df['hitouts_to_advantage']/df['hitouts']*100
-    df['pct_contested_poss'] = df['contested_possessions']/(df['possessions'])*100
-    df['pct_marks_contested'] = df['contested_marks']/(df['marks'])*100
-    df['points'] = (df['goals']*6)+(df['behinds'])
-    df['points_per_shot'] = df['points']/df['shots_at_goal']
-    df['points_per_shot'] = [0 if df['shots_at_goal'][i]==0 else df['points'][i]/df['shots_at_goal'][i] for i in range(len(df))]
+        df['Kick Efficiency'] = df['effective_kicks']/df['kicks']*100
+        df['Handball Efficiency'] = (df['effective_disposals']-df['effective_kicks'])/df['handballs']*100
+        df['Hitout Efficiency'] = df['hitouts_to_advantage']/df['hitouts']*100
+    df['% of Possessions Contested'] = df['contested_possessions']/(df['possessions'])*100
+    df['% of Marks Contested'] = df['contested_marks']/(df['marks'])*100
+    df['Points'] = (df['goals']*6)+(df['behinds'])
+    df['Points per Shot'] = df['points']/df['shots_at_goal']
+    df['Points per Shot'] = [0 if df['shots_at_goal'][i]==0 else df['points'][i]/df['shots_at_goal'][i] for i in range(len(df))]
     scatter_df = df
     scatter_df.rename(columns={'player_name':'Player','player_team':'Team','player_position':'Position(s)','PctOfSeason':'TOG%','games_played':'Games Played','kicks':'Kicks','marks':'Marks','handballs':'Handballs','disposals':'Disposals','effective_disposals':'Effective Disposals','goals':'Goals','behinds':'Behinds','hitouts':'Hitouts','tackles':'Tackles','rebounds':'Rebounds','inside_fifties':'Inside Fifties','clearances':'Clearances','clangers':'Clangers','free_kicks_for':'Free Kicks For','free_kicks_against':'Free Kicks Against','contested_possessions':'Contested Possessions','uncontested_possessions':'Uncontested Possessions','contested_marks':'Contested Marks','marks_inside_fifty':'Marks Inside Fifty','one_percenters':'One Percenters','bounces':'Bounces','goal_assists':'Goal Assists','afl_fantasy_score':'Afl Fantasy Score','centre_clearances':'Centre Clearances','stoppage_clearances':'Stoppage Clearances','score_involvements':'Score Involvements','metres_gained':'Metres Gained','turnovers':'Turnovers','intercepts':'Intercepts','tackles_inside_fifty':'Tackles Inside Fifty','contest_def_losses':'Contest Def Losses','contest_def_one_on_ones':'Contest Def One On Ones','contest_off_one_on_ones':'Contest Off One On Ones','contest_off_wins':'Contest Off Wins','def_half_pressure_acts':'Def Half Pressure Acts','effective_kicks':'Effective Kicks','f50_ground_ball_gets':'F50 Ground Ball Gets','ground_ball_gets':'Ground Ball Gets','hitouts_to_advantage':'Hitouts To Advantage','intercept_marks':'Intercept Marks','marks_on_lead':'Marks On Lead','pressure_acts':'Pressure Acts','rating_points':'Rating Points','ruck_contests':'Ruck Contests','score_launches':'Score Launches','shots_at_goal':'Shots At Goal','spoils':'Spoils'},
                       inplace=True)
