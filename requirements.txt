@@ -6,3 +6,4 @@ scipy
 statistics
 highlight-text
 plotly
+scikit-learn
