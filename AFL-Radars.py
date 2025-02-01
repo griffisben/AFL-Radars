@@ -18,10 +18,42 @@ import plotly.figure_factory as ff
 from plotly.graph_objects import Layout
 from sklearn.preprocessing import MinMaxScaler
 from scipy.stats import zscore
+from matplotlib.colors import Normalize, to_rgba
+import altair as alt
+
+plt.clf()
+plt.style.use('default')  # Reset Matplotlib
+sns.reset_defaults()  # Reset Seaborn
+
 
 colorscales = px.colors.named_colorscales()
 colorscales2 = [f"{cc}_r" for cc in colorscales]
 colorscales += colorscales2
+
+def make_season_metric_img(player_df, adj_80s, player, foc_var, league, season):
+    if adj_80s == 'Yes':
+        player_df[foc_var] = (player_df[foc_var] / player_df['TOG%']) * 85
+        adj_text = "Data Adjusted to 85% TOG% | 85% Time On Ground Percentage is average for starters per game"
+    else:
+        adj_text = ""
+
+    chart = alt.Chart(player_df).mark_bar(stroke='black', strokeWidth=0.75,color="#4c94f6",).encode(
+        x=alt.X('Opponent:N', title=None, sort=None),
+        y=alt.Y(f'{foc_var}:Q', title=foc_var),
+        tooltip=[alt.Tooltip('Opponent:N', title="Opponent"),
+                 alt.Tooltip(foc_var, title=foc_var, format=".1f"),
+                 alt.Tooltip('TOG%:Q', title="TOG%", format=".1f")]
+    ).properties(
+        height=700
+    )
+
+    final_chart = (chart).properties(
+        title=alt.Title(
+            text=f"{player} {foc_var} By Round, {season} {league}", fontSize=20,
+            subtitle=adj_text, subtitleFontSize=15, align='left', anchor='start')
+    )
+
+    return final_chart
 
 def NormalizeData(data):
     return (data - np.min(data)) / (np.max(data) - np.min(data)) * 100
@@ -186,6 +218,9 @@ def create_filter_table_df(mins, filter_pos):
     return dfProspect.reset_index(drop=True)
 
 def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_labels, sig, extra_text):
+    plt.clf()
+    plt.style.use('default')  # Reset Matplotlib
+    sns.reset_defaults()  # Reset Seaborn
     if league == 'AFLW':
         logo_df = pd.DataFrame({'team':['Adelaide Crows','Brisbane Lions','Carlton','Collingwood','Essendon','Fremantle','Geelong Cats','Gold Coast SUNS','GWS GIANTS','Hawthorn','Melbourne','Kangaroos','Port Adelaide','Richmond','St Kilda','Sydney Swans','West Coast Eagles','Western Bulldogs'],
                        'logo_url':['https://upload.wikimedia.org/wikipedia/en/thumb/0/07/Adelaide_Crows_Logo_2024.svg/1024px-Adelaide_Crows_Logo_2024.svg.png','https://upload.wikimedia.org/wikipedia/en/thumb/c/c7/Brisbane_Lions_logo_2010.svg/1024px-Brisbane_Lions_logo_2010.svg.png','https://upload.wikimedia.org/wikipedia/en/thumb/5/58/Carlton_FC_Logo_2020.svg/1024px-Carlton_FC_Logo_2020.svg.png','https://upload.wikimedia.org/wikipedia/en/thumb/a/a6/Collingwood_Football_Club_Logo_%282017%E2%80%93present%29.svg/1024px-Collingwood_Football_Club_Logo_%282017%E2%80%93present%29.svg.png','https://upload.wikimedia.org/wikipedia/en/thumb/8/8b/Essendon_FC_logo.svg/1920px-Essendon_FC_logo.svg.png','https://upload.wikimedia.org/wikipedia/en/thumb/c/ca/Fremantle_FC_logo.svg/1280px-Fremantle_FC_logo.svg.png','https://upload.wikimedia.org/wikipedia/en/thumb/5/5f/Geelong_Cats_logo.svg/1024px-Geelong_Cats_logo.svg.png','https://upload.wikimedia.org/wikipedia/en/thumb/7/73/Gold_Coast_Suns_logo_%28introduced_late_2024%29.svg/1280px-Gold_Coast_Suns_logo_%28introduced_late_2024%29.svg.png','https://upload.wikimedia.org/wikipedia/en/thumb/0/07/GWS_Giants_logo.svg/1280px-GWS_Giants_logo.svg.png','https://upload.wikimedia.org/wikipedia/en/thumb/6/62/Hawthorn-football-club-brand.svg/1280px-Hawthorn-football-club-brand.svg.png','https://upload.wikimedia.org/wikipedia/en/thumb/4/4e/Melbournefc.svg/1024px-Melbournefc.svg.png','https://upload.wikimedia.org/wikipedia/en/thumb/f/fc/North_Melbourne_FC_logo.svg/1024px-North_Melbourne_FC_logo.svg.png','https://upload.wikimedia.org/wikipedia/en/thumb/3/36/Port_Adelaide_Football_Club_logo.svg/800px-Port_Adelaide_Football_Club_logo.svg.png','https://upload.wikimedia.org/wikipedia/en/thumb/3/35/Richmond_Tigers_logo.svg/800px-Richmond_Tigers_logo.svg.png','https://upload.wikimedia.org/wikipedia/en/thumb/0/06/St_Kilda_Football_Club_logo_2024.svg/1024px-St_Kilda_Football_Club_logo_2024.svg.png','https://upload.wikimedia.org/wikipedia/en/thumb/a/af/Sydney_Swans_Logo_2020.svg/1024px-Sydney_Swans_Logo_2020.svg.png','https://upload.wikimedia.org/wikipedia/en/thumb/b/b5/West_Coast_Eagles_logo_2017.svg/1280px-West_Coast_Eagles_logo_2017.svg.png','https://upload.wikimedia.org/wikipedia/en/thumb/0/09/Western_Bulldogs_logo.svg/1024px-Western_Bulldogs_logo.svg.png']})
@@ -198,8 +233,6 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
                        'logo_url':['https://upload.wikimedia.org/wikipedia/en/thumb/0/07/Adelaide_Crows_Logo_2024.svg/1024px-Adelaide_Crows_Logo_2024.svg.png','https://upload.wikimedia.org/wikipedia/en/thumb/c/c7/Brisbane_Lions_logo_2010.svg/1024px-Brisbane_Lions_logo_2010.svg.png','https://upload.wikimedia.org/wikipedia/en/thumb/5/58/Carlton_FC_Logo_2020.svg/1024px-Carlton_FC_Logo_2020.svg.png','https://upload.wikimedia.org/wikipedia/en/thumb/a/a6/Collingwood_Football_Club_Logo_%282017%E2%80%93present%29.svg/1024px-Collingwood_Football_Club_Logo_%282017%E2%80%93present%29.svg.png','https://upload.wikimedia.org/wikipedia/en/thumb/8/8b/Essendon_FC_logo.svg/1920px-Essendon_FC_logo.svg.png','https://upload.wikimedia.org/wikipedia/en/thumb/c/ca/Fremantle_FC_logo.svg/1280px-Fremantle_FC_logo.svg.png','https://upload.wikimedia.org/wikipedia/en/thumb/5/5f/Geelong_Cats_logo.svg/1024px-Geelong_Cats_logo.svg.png','https://upload.wikimedia.org/wikipedia/en/thumb/7/73/Gold_Coast_Suns_logo_%28introduced_late_2024%29.svg/1280px-Gold_Coast_Suns_logo_%28introduced_late_2024%29.svg.png','https://upload.wikimedia.org/wikipedia/en/thumb/0/07/GWS_Giants_logo.svg/1280px-GWS_Giants_logo.svg.png','https://upload.wikimedia.org/wikipedia/en/thumb/6/62/Hawthorn-football-club-brand.svg/1280px-Hawthorn-football-club-brand.svg.png','https://upload.wikimedia.org/wikipedia/en/thumb/4/4e/Melbournefc.svg/1024px-Melbournefc.svg.png','https://upload.wikimedia.org/wikipedia/en/thumb/f/fc/North_Melbourne_FC_logo.svg/1024px-North_Melbourne_FC_logo.svg.png','https://upload.wikimedia.org/wikipedia/en/thumb/3/36/Port_Adelaide_Football_Club_logo.svg/800px-Port_Adelaide_Football_Club_logo.svg.png','https://upload.wikimedia.org/wikipedia/en/thumb/3/35/Richmond_Tigers_logo.svg/800px-Richmond_Tigers_logo.svg.png','https://upload.wikimedia.org/wikipedia/en/thumb/0/06/St_Kilda_Football_Club_logo_2024.svg/1024px-St_Kilda_Football_Club_logo_2024.svg.png','https://upload.wikimedia.org/wikipedia/en/thumb/a/af/Sydney_Swans_Logo_2020.svg/1024px-Sydney_Swans_Logo_2020.svg.png','https://upload.wikimedia.org/wikipedia/en/thumb/b/b5/West_Coast_Eagles_logo_2017.svg/1280px-West_Coast_Eagles_logo_2017.svg.png','https://upload.wikimedia.org/wikipedia/en/thumb/0/09/Western_Bulldogs_logo.svg/1024px-Western_Bulldogs_logo.svg.png']})
         game_length = 20*4
         
-    import matplotlib
-    matplotlib.rcParams.update(matplotlib.rcParamsDefault)
     df = pd.read_csv(f"https://raw.githubusercontent.com/griffisben/AFL-Radars/refs/heads/main/Player-Data/{league}/{season}.csv")
     df = df.dropna(subset=['player_position']).reset_index(drop=True)
     df['possessions'] = df['contested_possessions']+df['uncontested_possessions']
@@ -606,6 +639,8 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
 
 
     fig_show = plt.gcf()
+    plt.style.use('default')  # Reset Matplotlib
+    sns.reset_defaults()  # Reset Seaborn
     return fig_show
 
 ########################################################################
@@ -624,7 +659,7 @@ with st.expander('Instructions'):
     **Sidebar:**  \n
     1) Choose the league (AFL only for now, but I'm working on adding AFLW & VFL)  \n
     2) Select your desired season  \n
-    3) Set the minimum time on ground % for players to have played to be included  \n  \n
+    3) Set the minimum time on ground % for players to have played to be included. This is for the season, so a % of all available minutes for a player's team, not their TOG% per game  \n  \n
     **Player Radar Tab:**  \n
     1) Choose the positions to benchmark against (leave blank for all players, or choose 1 or more positions to _only_ include those position - no matter what position(s) you choose, the player you select will be included)  \n
     2) Decide if you want the data labels to be per game (per 80 minutes) numbers for each metric, or the player's percentile rank  \n
@@ -645,7 +680,11 @@ with st.expander('Instructions'):
     3) Submit these options, and sliders will appear below for you to set your weightings  \n
     4) Set weights for your metrics. These are used to create weighted, normalized z-scores using all of the included metrics. In the table, the metrics will be 0 to 100, with the player recording the lowest value receiving 0, and the highest value 100. These normalized z-scores are thus easy to interpret across metrics while retaining the distribution of the raw scores  \n
     5) Submit these weightings and a table will appear showing the final, normalized weighted z-score ranking of players for your specified model. The 'Score' column will always be between 0 and 100: the player with 100 is the player with the largest weighted score, and the player with 0 is the one with the lowest. Again, the use of z-scores allows us to retain the distribution of weighted scores  \n
-    6) We can interpret a player scoring 100 as the best player (in the given position(s) if applicable) that year in your specified model. And a player with a score of 73 could theoretically be 73% as good as that best player 
+    6) We can interpret a player scoring 100 as the best player (in the given position(s) if applicable) that year in your specified model. And a player with a score of 73 could theoretically be 73% as good as that best player  \n
+    **Game-By-Game Metrics Tab**  \n
+    1) Enter the player you want to see game-by-game numbers for  \n
+    2) Select the metric you want to visualize by each game  \n
+    3) Choose whether you want to adjust the metrics to 85% time on ground. This might make it a little easier to compare game to game. For example, if a player was on ground for 95% of a game, their data would be adjusted down. Conversely, if a player played less than 85%, their numbers for that game would be adjusted up
 """)
 
 avail_data = pd.read_csv(f"https://raw.githubusercontent.com/griffisben/AFL-Radars/refs/heads/main/AvailableData.csv")
@@ -653,11 +692,11 @@ avail_data = pd.read_csv(f"https://raw.githubusercontent.com/griffisben/AFL-Rada
 with st.sidebar:
     league = st.selectbox('League', avail_data.Competition.unique().tolist())
     season = st.selectbox('Season', sorted(avail_data[avail_data.Competition==league].Season.tolist(),reverse=True))
-    mins = st.number_input('Minimum Time On Ground %', 0, 100, 60, 1)
+    mins = st.number_input('Minimum Time On Ground % (season, not per game)', 0, 100, 60, 1)
 
 extra_text = avail_data[(avail_data.Competition==league) & (avail_data.Season==season)].DataTime.values[0]
 
-radar_tab, all_players_tab, scatter_tab, filter_tab, filter_table_tab, ranking_tab = st.tabs(['Player Radar', 'All Players List', 'Scatter Plots', 'Player Search, Filters', 'Player Search, Results', 'Weighted Metric Ranking'])
+radar_tab, all_players_tab, scatter_tab, filter_tab, filter_table_tab, ranking_tab, metric_trend_tab = st.tabs(['Player Radar', 'All Players List', 'Scatter Plots', 'Player Search, Filters', 'Player Search, Results', 'Weighted Metric Ranking', 'Game-By-Game Metrics'])
 
 with radar_tab:
     with st.form('Radar Options'):
@@ -989,3 +1028,45 @@ with ranking_tab:
 
     else:
         st.warning("Please select at least one metric.")
+
+with metric_trend_tab:
+    df = pd.read_csv(f"https://raw.githubusercontent.com/griffisben/AFL-Radars/refs/heads/main/Player-Data/{league}/GameByGame/{season}.csv")
+    df = df.rename(columns={'player.playerId':'player_id','player.photoURL':'picture','minutes':'minutes','kicks':'kicks','marks':'marks','handballs':'handballs','disposals':'disposals','extendedStats.effectiveDisposals':'effective_disposals','goals':'goals','behinds':'behinds','hitouts':'hitouts','tackles':'tackles','rebound50s':'rebounds','inside50s':'inside_fifties','clearances.totalClearances':'clearances','clangers':'clangers','freesFor':'free_kicks_for','freesAgainst':'free_kicks_against','':'brownlow_votes','contestedPossessions':'contested_possessions','uncontestedPossessions':'uncontested_possessions','contestedMarks':'contested_marks','marksInside50':'marks_inside_fifty','onePercenters':'one_percenters','bounces':'bounces','goalAssists':'goal_assists','dreamTeamPoints':'afl_fantasy_score','':'supercoach_score','clearances.centreClearances':'centre_clearances','clearances.stoppageClearances':'stoppage_clearances','scoreInvolvements':'score_involvements','metresGained':'metres_gained','turnovers':'turnovers','intercepts':'intercepts','tacklesInside50':'tackles_inside_fifty','extendedStats.contestDefLosses':'contest_def_losses','extendedStats.contestDefOneOnOnes':'contest_def_one_on_ones','extendedStats.contestOffOneOnOnes':'contest_off_one_on_ones','extendedStats.contestOffWins':'contest_off_wins','extendedStats.defHalfPressureActs':'def_half_pressure_acts','extendedStats.effectiveKicks':'effective_kicks','extendedStats.f50GroundBallGets':'f50_ground_ball_gets','extendedStats.groundBallGets':'ground_ball_gets','extendedStats.hitoutsToAdvantage':'hitouts_to_advantage','extendedStats.hitoutWinPercentage':'hitout_win_percentage','extendedStats.interceptMarks':'intercept_marks','extendedStats.marksOnLead':'marks_on_lead','extendedStats.pressureActs':'pressure_acts','ratingPoints':'rating_points','extendedStats.ruckContests':'ruck_contests','extendedStats.scoreLaunches':'score_launches','shotsAtGoal':'shots_at_goal','extendedStats.spoils':'spoils','team.name':'player_team','player.player.position':'player_position','player.playerJumperNumber':'guernsey_number',
+    })
+    if league == 'AFL':
+        df['minutes'] = 80*(df['timeOnGroundPercentage']/100)
+    if league == 'AFLW':
+        df['minutes'] = (17*4)*(df['timeOnGroundPercentage']/100)
+    df['player_name'] = df['player.givenName'] + " " + df['player.surname']
+    df.utcStartTime = pd.to_datetime(df.utcStartTime)
+    df = df.sort_values(['utcStartTime']).reset_index(drop=True)
+    df['Possessions'] = df['contested_possessions']+df['uncontested_possessions']
+    if league == 'AFL':
+        df['Kick Efficiency'] = df['effective_kicks']/df['kicks']*100
+        df['Handball Efficiency'] = (df['effective_disposals']-df['effective_kicks'])/df['handballs']*100
+        df['Hitout Efficiency'] = df['hitouts_to_advantage']/df['hitouts']*100
+    df['% of Possessions Contested'] = df['contested_possessions']/(df['Possessions'])*100
+    df['% of Marks Contested'] = df['contested_marks']/(df['marks'])*100
+    df['Points'] = (df['goals']*6)+(df['behinds'])
+    df['Points per Shot'] = df['Points']/df['shots_at_goal']
+    df['Points per Shot'] = [0 if df['shots_at_goal'][i]==0 else df['Points'][i]/df['shots_at_goal'][i] for i in range(len(df))]
+    df.rename(columns={'player_name':'Player','player_team':'Team','player_position':'Position(s)','timeOnGroundPercentage':'TOG%','games_played':'Games Played','kicks':'Kicks','marks':'Marks','handballs':'Handballs','disposals':'Disposals','effective_disposals':'Effective Disposals','goals':'Goals','behinds':'Behinds','hitouts':'Hitouts','tackles':'Tackles','rebounds':'Rebound 50s','inside_fifties':'Inside 50s','clearances':'Clearances','clangers':'Clangers','free_kicks_for':'Free Kicks For','free_kicks_against':'Free Kicks Against','contested_possessions':'Contested Possessions','uncontested_possessions':'Uncontested Possessions','contested_marks':'Contested Marks','marks_inside_fifty':'Marks Inside Fifty','one_percenters':'One Percenters','bounces':'Bounces','goal_assists':'Goal Assists','afl_fantasy_score':'Afl Fantasy Score','centre_clearances':'Centre Clearances','stoppage_clearances':'Stoppage Clearances','score_involvements':'Score Involvements','metres_gained':'Metres Gained','turnovers':'Turnovers','intercepts':'Intercepts','tackles_inside_fifty':'Tackles Inside Fifty','contest_def_losses':'Contest Def Losses','contest_def_one_on_ones':'Contest Def One On Ones','contest_off_one_on_ones':'Contest Off One On Ones','contest_off_wins':'Contest Off Wins','def_half_pressure_acts':'Def Half Pressure Acts','effective_kicks':'Effective Kicks','f50_ground_ball_gets':'Forward 50 Ground Ball Gets','ground_ball_gets':'Ground Ball Gets','hitouts_to_advantage':'Hitouts To Advantage','intercept_marks':'Intercept Marks','marks_on_lead':'Marks On Lead','pressure_acts':'Pressure Acts','rating_points':'Rating Points','ruck_contests':'Ruck Contests','score_launches':'Score Launches','shots_at_goal':'Shots At Goal','spoils':'Spoils'},
+                      inplace=True)
+    df['Opponent'] = [f"vs. {df['away.team.name'][i]} - {df['round.name'][i]}" if df['Team'][i]==df['home.team.name'][i] else f"at {df['home.team.name'][i]} - {df['round.name'][i]}" for i in range(len(df))]
+   
+    with st.form('Player Game-By-Game Metric Development'):
+        submitted = st.form_submit_button("Submit Player & Metric")
+        player = st.text_input("Player", "")
+        # vars = df.columns[21:].tolist()
+        # vars.remove('Opponent')
+        foc_var = st.selectbox("Metric to Plot:", vars+['TOG%'])
+        adj_80s = st.selectbox('Adjust Data for Time On Ground?', ['Yes','No'])
+        
+        player_df = df[df.Player==player].reset_index(drop=True)
+        
+        #############
+        if len(player_df) > 0:
+            season_metric_fig = make_season_metric_img(player_df, adj_80s, player, foc_var, league, season)
+            st.altair_chart(season_metric_fig, use_container_width=True)
+        else:
+            st.write(f"Your chosen player played 0 {league} games in {season}")
