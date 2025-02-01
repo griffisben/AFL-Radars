@@ -18,6 +18,7 @@ import plotly.figure_factory as ff
 from plotly.graph_objects import Layout
 from sklearn.preprocessing import MinMaxScaler
 from scipy.stats import zscore
+import seaborn as sns
 from matplotlib.colors import Normalize, to_rgba
 import altair as alt
 
@@ -394,7 +395,6 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
                             'free_kicks_against_pct':'Frees\nAgainst',
                              }, inplace=True)
 
-    print('Number of players comparing to:',len(dfProspect))
     
 #     ###########################################################################
 
