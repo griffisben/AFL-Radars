@@ -34,7 +34,7 @@ colorscales += colorscales2
 def make_season_metric_img(player_df, adj_80s, player, foc_var, league, season):
     if adj_80s == 'Yes':
         player_df[foc_var] = (player_df[foc_var] / player_df['TOG%']) * 85
-        adj_text = "Data Adjusted to 85% TOG% | 85% Time On Ground Percentage is average for starters per game<br>Created on footy-radars.streamlit.app"
+        adj_text = "Data Adjusted to 85% TOG%, the avg for starters per game | Created on footy-radars.streamlit.app"
     else:
         adj_text = ""
 
