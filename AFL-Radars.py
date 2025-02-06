@@ -570,7 +570,7 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
     if dist_labels == 'No':
         dist_text = ""
 
-    plt.suptitle('%s (%s, %.1f%s TOG)\n%s %s Percentile Rankings%s'
+    plt.suptitle('%s (%s, %.1f%s of Season Played)\n%s %s Percentile Rankings%s'
                  %(name, pos_callout, pct_played*100, '%', season,league,callout_title),
                  fontsize=15.5,
                  fontfamily="DejaVu Sans",
@@ -579,7 +579,7 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
                 x=0.5,
                 y=.97)
 
-    plt.annotate(f"'Per Game' means per {game_length} minutes\nBars are percentiles%s\nAll values are per game%s\nCompared to %s\nOnly includes players with at least %.0f%s time on ground\nData: AFL | %s\nSample Size: %i players" %(callout_text,extra_text, compares, mins, '%', sig, len(dfProspect)),
+    plt.annotate(f"'Per Game' means per {game_length} minutes\nBars are percentiles%s\nAll values are per game%s\nCompared to %s\nOnly includes players with at least %.0f%s of their team's season played\nData: AFL | %s\nSample Size: %i players" %(callout_text,extra_text, compares, mins, '%', sig, len(dfProspect)),
                  xy = (-.05, -.05), xycoords='axes fraction',
                 ha='left', va='center',
                 fontsize=9, fontfamily="DejaVu Sans",
