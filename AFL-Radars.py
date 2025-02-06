@@ -34,7 +34,7 @@ colorscales += colorscales2
 def make_season_metric_img(player_df, adj_80s, player, foc_var, league, season):
     if adj_80s == 'Yes':
         player_df[foc_var] = (player_df[foc_var] / player_df['TOG%']) * 85
-        adj_text = "Data Adjusted to 85% TOG% | 85% Time On Ground Percentage is average for starters per game"
+        adj_text = "Data Adjusted to 85% TOG% | 85% Time On Ground Percentage is average for starters per game<br>Created on footy-radars.streamlit.app"
     else:
         adj_text = ""
 
@@ -651,7 +651,7 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
 ########################################################################
 
 st.title("Footy Radars :rugby_football:")
-st.caption("All data via AFL")
+st.caption("All data via AFL | Coded & Created by Ben Griffis (@BeGriffis on socials; bengriffis.com")
 
 with st.expander('Instructions'): 
     st.write("""
@@ -714,7 +714,7 @@ with radar_tab:
                          pos = pos, #### make multiselect('Full-Forward','Forward Pocket','Centre Half-Forward','Half-Forward','Wing','Centre','Ruck-Rover','Rover','Ruck','Half-Back','Centre Half-Back','Back-Pocket','Full-Back',)
                          mins = mins,     # time on ground (50% = 50% of season)
                          name = name,
-                         sig = 'Created by Ben Griffis (@BeGriffis)',
+                         sig = 'Created on footy-radars.streamlit.app',
                          callout = callout, # Percentile | Per Game
                          bar_colors = 'Benchmarking Percentiles',  ## Benchmarking Percentiles | Metric Groups
                          dist_labels = dist_labels,
