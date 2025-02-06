@@ -651,7 +651,7 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
 ########################################################################
 
 st.title("Footy Radars :rugby_football:")
-st.caption("All data via AFL | Coded & Created by Ben Griffis (@BeGriffis on socials; bengriffis.com")
+st.caption("All data via AFL | Coded & Created by Ben Griffis (@BeGriffis on socials; bengriffis.com)")
 
 with st.expander('Instructions'): 
     st.write("""
