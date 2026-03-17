@@ -253,7 +253,7 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
     dfProspect = df[df['PctOfSeason']>=mins/100]
     fallback_raw_valsdf = dfProspect[(dfProspect['player_name']==name)]
     team = fallback_raw_valsdf.player_team.values[0]
-    st.write(fallback_raw_valsdf.player_team)
+
     if pos == None:
         compares = 'All Players'
     else:
@@ -315,6 +315,7 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
     pic = dfRadarMF.picture.values[0]
     pic = pic.replace(" ","%20")
     team_pic = logo_df[logo_df['team']==team].logo_url.values[0]
+    st.write(team_pic)
 
     if league == 'AFL':
         dfRadarMF = dfRadarMF[["player_name",
