@@ -614,11 +614,11 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
 
     ######## League Logo Image ########
     if league == 'AFL':
-        urllib.request.urlretrieve("https://upload.wikimedia.org/wikipedia/en/thumb/e/e4/Australian_Football_League.svg/1920px-Australian_Football_League.svg.png","afl_logo.png")
+        urllib.request.urlretrieve("https://upload.wikimedia.org/wikipedia/en/9/91/AFL-Logo_RGB_white_border.png","afl_logo.png")
     if league == 'AFLW':
-        urllib.request.urlretrieve("https://upload.wikimedia.org/wikipedia/en/thumb/b/b1/AFL_Women%27s_logo.svg/1280px-AFL_Women%27s_logo.svg.png","afl_logo.png")
+        urllib.request.urlretrieve("https://en.wikipedia.org/wiki/AFL_Women%27s#/media/File:AFL_Women's_logo.svg","afl_logo.png")
     if league == 'VFL':
-        urllib.request.urlretrieve("https://upload.wikimedia.org/wikipedia/en/thumb/3/34/VFL_Football_Logo.svg/1024px-VFL_Football_Logo.svg.png","afl_logo.png")
+        urllib.request.urlretrieve("https://en.wikipedia.org/wiki/Victorian_Football_League#/media/File:VFL_Football_Logo.svg","afl_logo.png")
     l_image = Image.open('afl_logo.png')
     newax = fig.add_axes([.76,.82,0.1,0.1], anchor='C', zorder=1)
     newax.imshow(l_image)
