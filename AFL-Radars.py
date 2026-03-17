@@ -791,7 +791,7 @@ with scatter_tab:
     fig_scatter.add_hline(y=scatter_df[yy].median(), name='Median', line_width=0.5)
     fig_scatter.add_vline(x=scatter_df[xx].median(), name='Median', line_width=0.5)
     
-    st.plotly_chart(fig_scatter, theme=None, use_container_width=False)
+    st.plotly_chart(fig_scatter, theme=None, width='content')
 
 with filter_tab:
     st.button("Reset Sliders", on_click=_update_slider, kwargs={"value": 0.0})
@@ -1067,6 +1067,6 @@ with metric_trend_tab:
         #############
         if len(player_df) > 0:
             season_metric_fig = make_season_metric_img(player_df, adj_80s, player, foc_var, league, season)
-            st.altair_chart(season_metric_fig, use_container_width=True)
+            st.altair_chart(season_metric_fig, width='stretch')
         else:
             st.write(f"Your chosen player played 0 {league} games in {season}")
