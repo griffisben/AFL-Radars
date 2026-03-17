@@ -595,6 +595,10 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
 
 
     ######## Club Image ########
+    opener = urllib.request.build_opener()
+    opener.addheaders = [('User-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36')]
+    urllib.request.install_opener(opener)
+
     from PIL import Image
     urllib.request.urlretrieve(pic,"player_pic.png")
     image = Image.open('player_pic.png')
