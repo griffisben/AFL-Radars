@@ -239,8 +239,8 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
                            'https://upload.wikimedia.org/wikipedia/en/8/8b/Essendon_FC_logo.svg',
                            'https://upload.wikimedia.org/wikipedia/en/c/ca/Fremantle_FC_logo.svg',
                            'https://upload.wikimedia.org/wikipedia/en/5/5f/Geelong_Cats_logo.svg',
-                           'https://en.wikipedia.org/wiki/Gold_Coast_Suns#/media/File:Gold_Coast_Suns_logo_(introduced_late_2024).svg',
-                           'https://en.wikipedia.org/wiki/Greater_Western_Sydney_Giants#/media/File:GWS_Giants_logo.svg',
+                           'https://upload.wikimedia.org/wikipedia/en/7/73/Gold_Coast_Suns_logo_%28introduced_late_2024%29.svg',
+                           'https://upload.wikimedia.org/wikipedia/en/0/07/GWS_Giants_logo.svg',
                            'https://en.wikipedia.org/wiki/Hawthorn_Football_Club#/media/File:Hawthorn-football-club-brand.svg',
                            'https://en.wikipedia.org/wiki/Melbourne_Football_Club#/media/File:Melbournefc.svg',
                            'https://en.wikipedia.org/wiki/North_Melbourne_Football_Club#/media/File:North_Melbourne_logo.png',
@@ -732,21 +732,21 @@ with radar_tab:
         name = st.text_input("Player", "")
         submitted = st.form_submit_button("Generate Radar!")
         
-        try:
-            radar_img = scout_report(league = league,
-                         season = season,
-                         pos = pos, #### make multiselect('Full-Forward','Forward Pocket','Centre Half-Forward','Half-Forward','Wing','Centre','Ruck-Rover','Rover','Ruck','Half-Back','Centre Half-Back','Back-Pocket','Full-Back',)
-                         mins = mins,     # time on ground (50% = 50% of season)
-                         name = name,
-                         sig = 'Created on footy-radars.streamlit.app',
-                         callout = callout, # Percentile | Per Game
-                         bar_colors = 'Benchmarking Percentiles',  ## Benchmarking Percentiles | Metric Groups
-                         dist_labels = dist_labels,
-                         extra_text = f' | {extra_text}',
-                        )
-            st.pyplot(radar_img.figure)
-        except:
-            st.text("Please enter a valid player name. Refer to the All Players List tab if needed.  \nEnsure your player meets the minimum TOG% threshold.")
+        # try:
+        radar_img = scout_report(league = league,
+                     season = season,
+                     pos = pos, #### make multiselect('Full-Forward','Forward Pocket','Centre Half-Forward','Half-Forward','Wing','Centre','Ruck-Rover','Rover','Ruck','Half-Back','Centre Half-Back','Back-Pocket','Full-Back',)
+                     mins = mins,     # time on ground (50% = 50% of season)
+                     name = name,
+                     sig = 'Created on footy-radars.streamlit.app',
+                     callout = callout, # Percentile | Per Game
+                     bar_colors = 'Benchmarking Percentiles',  ## Benchmarking Percentiles | Metric Groups
+                     dist_labels = dist_labels,
+                     extra_text = f' | {extra_text}',
+                    )
+        st.pyplot(radar_img.figure)
+        # except:
+        #     st.text("Please enter a valid player name. Refer to the All Players List tab if needed.  \nEnsure your player meets the minimum TOG% threshold.")
 
 with all_players_tab:
     df = pd.read_csv(f"https://raw.githubusercontent.com/griffisben/AFL-Radars/refs/heads/main/Player-Data/{league}/{season}.csv")
