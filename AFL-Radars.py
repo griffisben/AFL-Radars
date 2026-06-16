@@ -541,7 +541,6 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
         text_cs.append(color[0])
         text_inv_cs.append(color[1])
 
-    # st.dataframe(raw_vals.iloc[0])
 
     if callout == 'Per Game':
         callout_text = " | Values shown are per game"
@@ -560,7 +559,7 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
             face = 'white'
         elif bar_colors == 'Benchmarking Percentiles':
             if callout == 'Per Game':
-                value_format = f'{round(raw_vals.iloc[0][i+1], 2)}'
+                value_format = f'{round(raw_vals.iloc[0,i+1], 2)}'
             else:
                 value_format = format(bar.get_height() * 100, '.0f')
             color = text_inv_cs[i]
