@@ -628,7 +628,8 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
     newax = fig.add_axes([.42,.43,0.18,0.18], anchor='C', zorder=1)
     newax.imshow(image)
     newax.axis('off')
-    
+
+    st.write(team_pic)
     urllib.request.urlretrieve(team_pic,'team_pic.png')
     image = Image.open('team_pic.png')
     newax = fig.add_axes([.15,.82,0.1,0.1], anchor='C', zorder=1)
