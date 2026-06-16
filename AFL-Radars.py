@@ -541,7 +541,7 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
         text_cs.append(color[0])
         text_inv_cs.append(color[1])
 
-    st.dataframe(raw_vals)
+    st.dataframe(raw_vals.iloc[0])
 
     if callout == 'Per Game':
         callout_text = " | Values shown are per game"
