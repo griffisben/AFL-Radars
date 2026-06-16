@@ -975,7 +975,7 @@ with filter_table_tab:
     
     st.write("Colored numbers shown are percentile ranks")
     
-    st.dataframe(player_research_table.style.applymap(color_percentile, subset=player_research_table.columns[5:]))
+    st.dataframe(player_research_table.style.map(color_percentile, subset=player_research_table.columns[5:]))
 
 
 with ranking_tab:
@@ -1029,8 +1029,8 @@ with ranking_tab:
 
         # Display results
         st.write("Normalized Weighted Z-Score Player Rankings")
-        st.dataframe(df_filtered.sort_values("Score", ascending=False)[["Player","Team","Position(s)",'TOG%',"Score",] + metrics].style.applymap(color_percentile_100, subset=df_filtered.sort_values("Score", ascending=False)[["Player","Team","Position(s)",'TOG%',"Score",] + metrics].columns[4:]))
-
+        st.dataframe(df_filtered.sort_values("Score", ascending=False)[["Player","Team","Position(s)",'TOG%',"Score",] + metrics].style.map(color_percentile_100, subset=df_filtered.sort_values("Score", ascending=False)[["Player","Team","Position(s)",'TOG%',"Score",] + metrics].columns[4:]))
+        st.dataframe(player_research_table.style.map(color_percentile, subset=player_research_table.columns[6:]), width='stretch')
     else:
         st.warning("Please select at least one metric.")
 
