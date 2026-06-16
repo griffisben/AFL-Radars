@@ -428,7 +428,6 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
                         name: 'Value',
                              'index': 'Group'})
     df1['Group'] = df1['Group'].astype(str)  # Convert to string type
-    st.dataframe(df1)
     
     if league == 'AFL':
         for i in range(len(df1)):
@@ -542,7 +541,8 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
         text_cs.append(color[0])
         text_inv_cs.append(color[1])
 
-    
+    st.dataframe(raw_vals)
+
     if callout == 'Per Game':
         callout_text = " | Values shown are per game"
         callout_title = ' & Per Game Values'
