@@ -428,31 +428,31 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
     df1 = df1.rename(columns={'player_name': 'Metric',
                         name: 'Value',
                              'index': 'Group'})
-    df1['Group'] = df1['Group'].astype(str)  # Convert to string type
+    # df1['Group'] = df1['Group'].astype(str)  # Convert to string type
     
     if league == 'AFL':
         for i in range(len(df1)):
-            if int(df1['Group'][i]) <= 6:  # Convert to int for comparison
+            if df1['Group'][i] <= 6:
                 df1['Group'][i] = 'Scoring'
-            elif int(df1['Group'][i]) <= 15:
+            elif df1['Group'][i] <= 15:
                 df1['Group'][i] = 'Possession'
-            elif int(df1['Group'][i]) <= 21:
+            elif df1['Group'][i] <= 21:
                 df1['Group'][i] = 'Marks'
-            elif int(df1['Group'][i]) <= 30:
+            elif df1['Group'][i] <= 30:
                 df1['Group'][i] = 'Defense'
-            elif int(df1['Group'][i]) <= 33:
+            elif df1['Group'][i] <= 33:
                 df1['Group'][i] = 'Bad'
-    elif league != 'AFL':
+    if league != 'AFL':
         for i in range(len(df1)):
-            if int(df1['Group'][i]) <= 6:
+            if df1['Group'][i] <= 6:
                 df1['Group'][i] = 'Scoring'
-            elif int(df1['Group'][i]) <= 13:
+            elif df1['Group'][i] <= 13:
                 df1['Group'][i] = 'Possession'
-            elif int(df1['Group'][i]) <= 17:
+            elif df1['Group'][i] <= 17:
                 df1['Group'][i] = 'Marks'
-            elif int(df1['Group'][i]) <= 22:
+            elif df1['Group'][i] <= 22:
                 df1['Group'][i] = 'Defense'
-            elif int(df1['Group'][i]) <= 25:
+            elif df1['Group'][i] <= 25:
                 df1['Group'][i] = 'Bad'
 
 
