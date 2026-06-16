@@ -231,7 +231,26 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
         'kick_efficiency','handball_efficiency','hitout_efficiency']
     if league == 'AFL':
         logo_df = pd.DataFrame({'team':['Adelaide Crows','Brisbane Lions','Carlton','Collingwood','Essendon','Fremantle','Geelong Cats','Gold Coast SUNS','GWS GIANTS','Hawthorn','Melbourne','North Melbourne','Port Adelaide','Richmond','St Kilda','Sydney Swans','West Coast Eagles','Western Bulldogs'],
-                       'logo_url':['https://en.wikipedia.org/wiki/Adelaide_Football_Club#/media/File:Adelaide_Crows_Logo_2024.svg','https://en.wikipedia.org/wiki/Brisbane_Lions#/media/File:Brisbane_Lions_logo_2010.svg','https://en.wikipedia.org/wiki/Carlton_Football_Club#/media/File:Carlton_FC_Logo_2020.svg','https://en.wikipedia.org/wiki/Collingwood_Football_Club#/media/File:Collingwood_Football_Club_Logo_(2017%E2%80%93present).svg','https://en.wikipedia.org/wiki/Essendon_Football_Club#/media/File:Essendon_FC_logo.svg','https://en.wikipedia.org/wiki/Fremantle_Football_Club#/media/File:Fremantle_FC_logo.svg','https://en.wikipedia.org/wiki/Geelong_Football_Club#/media/File:Geelong_Cats_logo.svg','https://en.wikipedia.org/wiki/Gold_Coast_Suns#/media/File:Gold_Coast_Suns_logo_(introduced_late_2024).svg','https://en.wikipedia.org/wiki/Greater_Western_Sydney_Giants#/media/File:GWS_Giants_logo.svg','https://en.wikipedia.org/wiki/Hawthorn_Football_Club#/media/File:Hawthorn-football-club-brand.svg','https://en.wikipedia.org/wiki/Melbourne_Football_Club#/media/File:Melbournefc.svg','https://en.wikipedia.org/wiki/North_Melbourne_Football_Club#/media/File:North_Melbourne_logo.png','https://en.wikipedia.org/wiki/Port_Adelaide_Football_Club#/media/File:Port_Adelaide_Football_Club_logo.svg','https://en.wikipedia.org/wiki/Richmond_Football_Club#/media/File:Richmond_Tigers_logo.svg','https://upload.wikimedia.org/wikipedia/en/0/06/St_Kilda_Football_Club_logo_2024.svg','https://en.wikipedia.org/wiki/Sydney_Swans#/media/File:Sydney_Swans_Logo_2020.svg','https://en.wikipedia.org/wiki/West_Coast_Eagles#/media/File:West_Coast_Eagles_logo_2017.svg','https://en.wikipedia.org/wiki/Western_Bulldogs#/media/File:Western_Bulldogs_logo.svg']})
+                       'logo_url':[
+                           'https://upload.wikimedia.org/wikipedia/en/0/07/Adelaide_Crows_Logo_2024.svg',
+                           'https://upload.wikimedia.org/wikipedia/en/c/c7/Brisbane_Lions_logo_2010.svg',
+                           'https://upload.wikimedia.org/wikipedia/en/5/58/Carlton_FC_Logo_2020.svg',
+                           'https://upload.wikimedia.org/wikipedia/en/a/a6/Collingwood_Football_Club_Logo_%282017%E2%80%93present%29.svg',
+                           'https://upload.wikimedia.org/wikipedia/en/8/8b/Essendon_FC_logo.svg',
+                           'https://upload.wikimedia.org/wikipedia/en/c/ca/Fremantle_FC_logo.svg',
+                           'https://upload.wikimedia.org/wikipedia/en/5/5f/Geelong_Cats_logo.svg',
+                           'https://upload.wikimedia.org/wikipedia/en/7/73/Gold_Coast_Suns_logo_%28introduced_late_2024%29.svg',
+                           'https://upload.wikimedia.org/wikipedia/en/0/07/GWS_Giants_logo.svg',
+                           'https://en.wikipedia.org/wiki/Hawthorn_Football_Club#/media/File:Hawthorn-football-club-brand.svg',
+                           'https://en.wikipedia.org/wiki/Melbourne_Football_Club#/media/File:Melbournefc.svg',
+                           'https://en.wikipedia.org/wiki/North_Melbourne_Football_Club#/media/File:North_Melbourne_logo.png',
+                           'https://en.wikipedia.org/wiki/Port_Adelaide_Football_Club#/media/File:Port_Adelaide_Football_Club_logo.svg',
+                           'https://en.wikipedia.org/wiki/Richmond_Football_Club#/media/File:Richmond_Tigers_logo.svg',
+                           'https://upload.wikimedia.org/wikipedia/en/0/06/St_Kilda_Football_Club_logo_2024.svg',
+                           'https://en.wikipedia.org/wiki/Sydney_Swans#/media/File:Sydney_Swans_Logo_2020.svg',
+                           'https://en.wikipedia.org/wiki/West_Coast_Eagles#/media/File:West_Coast_Eagles_logo_2017.svg',
+                           'https://en.wikipedia.org/wiki/Western_Bulldogs#/media/File:Western_Bulldogs_logo.svg'
+                       ]})
         game_length = 20*4
         
     df = pd.read_csv(f"https://raw.githubusercontent.com/griffisben/AFL-Radars/refs/heads/main/Player-Data/{league}/{season}.csv")
@@ -315,7 +334,6 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
     pic = dfRadarMF.picture.values[0]
     pic = pic.replace(" ","%20")
     team_pic = logo_df[logo_df['team']==team].logo_url.values[0]
-    st.write(team_pic)
 
     if league == 'AFL':
         dfRadarMF = dfRadarMF[["player_name",
@@ -610,7 +628,7 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
     newax.axis('off')
     
     urllib.request.urlretrieve(team_pic,"team_pic.png")
-    image = Image.open('team_pic.png')
+    image = Image.open(urllib.request.urlretrieve(team_pic,"team_pic.png"))
     newax = fig.add_axes([.15,.82,0.1,0.1], anchor='C', zorder=1)
     newax.imshow(image)
     newax.axis('off')
