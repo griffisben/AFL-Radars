@@ -428,6 +428,7 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
                         name: 'Value',
                              'index': 'Group'})
     df1['Group'] = df1['Group'].astype(str)  # Convert to string type
+    st.dataframe(df1)
     
     if league == 'AFL':
         for i in range(len(df1)):
