@@ -427,8 +427,8 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
     df1 = df1.rename(columns={'player_name': 'Metric',
                         name: 'Value',
                              'index': 'Group'})
+    df1.Group = df1.Group.astype(int)
     if league == 'AFL':
-        st.dataframe(df1)
         for i in range(len(df1)):
             if df1['Group'][i] <= 6:
                 df1['Group'][i] = 'Scoring'
