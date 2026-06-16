@@ -21,6 +21,8 @@ from scipy.stats import zscore
 import seaborn as sns
 from matplotlib.colors import Normalize, to_rgba
 import altair as alt
+import requests
+from io import BytesIO
 
 plt.clf()
 plt.style.use('default')  # Reset Matplotlib
@@ -627,8 +629,8 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
     newax.imshow(image)
     newax.axis('off')
     
-    urllib.request.urlretrieve(team_pic,"team_pic.png")
-    image = Image.open(team_pic)
+    response = requests.get(team_pic)
+    image = Image.open(BytesIO(response.content))
     newax = fig.add_axes([.15,.82,0.1,0.1], anchor='C', zorder=1)
     newax.imshow(image)
     newax.axis('off')
