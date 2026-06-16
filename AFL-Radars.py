@@ -240,7 +240,7 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
                            'https://upload.wikimedia.org/wikipedia/en/a/a6/Collingwood_Football_Club_Logo_%282017%E2%80%93present%29.svg',
                            'https://upload.wikimedia.org/wikipedia/en/8/8b/Essendon_FC_logo.svg',
                            'https://upload.wikimedia.org/wikipedia/en/c/ca/Fremantle_FC_logo.svg',
-                           'https://upload.wikimedia.org/wikipedia/en/5/5f/Geelong_Cats_logo.svg',
+                           'https://en.wikipedia.org/wiki/Geelong_Football_Club#/media/File:Geelong_Cats_logo.svg',
                            'https://upload.wikimedia.org/wikipedia/en/7/73/Gold_Coast_Suns_logo_%28introduced_late_2024%29.svg',
                            'https://upload.wikimedia.org/wikipedia/en/0/07/GWS_Giants_logo.svg',
                            'https://en.wikipedia.org/wiki/Hawthorn_Football_Club#/media/File:Hawthorn-football-club-brand.svg',
