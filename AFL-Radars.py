@@ -434,7 +434,7 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
     if league == 'AFL':
         for i in range(len(df1)):
             if df1['Group'][i] <= 6:
-                df1['GroupName'][i] = 'Scoring'
+                df1.at[i,'GroupName'] = 'Scoring'
             elif df1['Group'][i] <= 15:
                 df1['GroupName'][i] = 'Possession'
             elif df1['Group'][i] <= 21:
