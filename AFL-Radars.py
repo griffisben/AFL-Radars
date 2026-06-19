@@ -436,13 +436,13 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
             if df1['Group'][i] <= 6:
                 df1.at[i,'GroupName'] = 'Scoring'
             elif df1['Group'][i] <= 15:
-                df1['GroupName'][i] = 'Possession'
+                df1.at[i,'GroupName'] = 'Possession'
             elif df1['Group'][i] <= 21:
-                df1['GroupName'][i] = 'Marks'
+                df1.at[i,'GroupName'] = 'Marks'
             elif df1['Group'][i] <= 30:
-                df1['GroupName'][i] = 'Defense'
+                df1.at[i,'GroupName'] = 'Defense'
             elif df1['Group'][i] <= 33:
-                df1['GroupName'][i] = 'Bad'
+                df1.at[i,'GroupName'] = 'Bad'
     if league != 'AFL':
         for i in range(len(df1)):
             if df1['Group'][i] <= 6:
