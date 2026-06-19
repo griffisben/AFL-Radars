@@ -47,7 +47,7 @@ def ben_theme():
                 'fill': '#4a2e19'
             },
             'title': {
-                'color': '#4a2e19',
+                'color': 'red',
                 'subtitleColor': '#4a2e19'
             }
         }
