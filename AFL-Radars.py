@@ -446,17 +446,16 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
     if league != 'AFL':
         for i in range(len(df1)):
             if df1['Group'][i] <= 6:
-                df1['GroupName'][i] = 'Scoring'
+                df1.at[i,'GroupName'] = 'Scoring'
             elif df1['Group'][i] <= 13:
-                df1['GroupName'][i] = 'Possession'
+                df1.at[i,'GroupName'] = 'Possession'
             elif df1['Group'][i] <= 17:
-                df1['GroupName'][i] = 'Marks'
+                df1.at[i,'GroupName'] = 'Marks'
             elif df1['Group'][i] <= 22:
-                df1['GroupName'][i] = 'Defense'
+                df1.at[i,'GroupName'] = 'Defense'
             elif df1['Group'][i] <= 25:
-                df1['GroupName'][i] = 'Bad'
+                df1.at[i,'GroupName'] = 'Bad'
 
-    st.dataframe(df1)
     #####################################################################
     
     ### This link below is where I base a lot of my radar code off of
@@ -623,8 +622,8 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
     opener.addheaders = [('User-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36')]
     urllib.request.install_opener(opener)
 
-    urllib.request.urlretrieve(pic,"player_pic.png")
-    image = Image.open('player_pic.png')
+    # urllib.request.urlretrieve(pic,"player_pic.png")
+    image =  Image.open(urllib.request.urlopen(pic))
     newax = fig.add_axes([.42,.43,0.18,0.18], anchor='C', zorder=1)
     newax.imshow(image)
     newax.axis('off')
@@ -636,12 +635,12 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
 
     ######## League Logo Image ########
     if league == 'AFL':
-        urllib.request.urlretrieve("https://upload.wikimedia.org/wikipedia/en/9/91/AFL-Logo_RGB_white_border.png","afl_logo.png")
+        l_image = Image.open(urllib.request.urlopen("https://upload.wikimedia.org/wikipedia/en/9/91/AFL-Logo_RGB_white_border.png"))
     if league == 'AFLW':
-        urllib.request.urlretrieve("https://en.wikipedia.org/wiki/AFL_Women%27s#/media/File:AFL_Women's_logo.svg","afl_logo.png")
+        l_image = Image.open(urllib.request.urlopen("https://en.wikipedia.org/wiki/AFL_Women%27s#/media/File:AFL_Women's_logo.svg"))
     if league == 'VFL':
-        urllib.request.urlretrieve("https://en.wikipedia.org/wiki/Victorian_Football_League#/media/File:VFL_Football_Logo.svg","afl_logo.png")
-    l_image = Image.open('afl_logo.png')
+        l_image = Image.open(urllib.request.urlopen("https://en.wikipedia.org/wiki/Victorian_Football_League#/media/File:VFL_Football_Logo.svg"))
+    # l_image = Image.open('afl_logo.png')
     newax = fig.add_axes([.76,.82,0.1,0.1], anchor='C', zorder=1)
     newax.imshow(l_image)
     newax.axis('off')
