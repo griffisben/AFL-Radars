@@ -29,6 +29,31 @@ plt.clf()
 plt.style.use('default')  # Reset Matplotlib
 sns.reset_defaults()  # Reset Seaborn
 
+#########################
+@alt.theme.register('ben_theme', enable=True)
+def ben_theme():
+    return {
+        'config': {
+            'background': '#fbf9f4',
+            # 'text': '#4a2e19',
+            # 'mark': {
+            #     'color': focal_color,
+            # },
+            'axis': {
+                'titleColor': '#4a2e19',
+                'labelColor': '#4a2e19',
+            },
+            'text': {
+                'fill': '#4a2e19'
+            },
+            'title': {
+                'color': '#4a2e19',
+                'subtitleColor': '#4a2e19'
+            }
+        }
+    }
+################################
+
 
 colorscales = px.colors.named_colorscales()
 colorscales2 = [f"{cc}_r" for cc in colorscales]
@@ -55,7 +80,7 @@ def make_season_metric_img(player_df, adj_80s, player, foc_var, league, season):
         title=alt.Title(
             text=f"{player} {foc_var} By Round, {season} {league}", fontSize=20,
             subtitle=adj_text, subtitleFontSize=15, align='left', anchor='start')
-    ).configure(background='#fbf9f4')
+    )
 
     return final_chart
 
