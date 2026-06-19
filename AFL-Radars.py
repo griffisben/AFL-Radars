@@ -628,10 +628,10 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
     newax.imshow(image)
     newax.axis('off')
 
-    # image = Image.open(urllib.request.urlopen(team_pic))
-    # newax = fig.add_axes([.15,.82,0.1,0.1], anchor='C', zorder=1)
-    # newax.imshow(image)
-    # newax.axis('off')
+    image = Image.open(urllib.request.urlopen(team_pic))
+    newax = fig.add_axes([.15,.82,0.1,0.1], anchor='C', zorder=1)
+    newax.imshow(image)
+    newax.axis('off')
 
     ######## League Logo Image ########
     if league == 'AFL':
