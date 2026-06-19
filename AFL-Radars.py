@@ -23,6 +23,7 @@ from matplotlib.colors import Normalize, to_rgba
 import altair as alt
 import requests
 from io import BytesIO
+from PIL import Image
 
 plt.clf()
 plt.style.use('default')  # Reset Matplotlib
@@ -429,31 +430,31 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
                         name: 'Value',
                              'index': 'Group'})
     # df1['Group'] = df1['Group'].astype(str)  # Convert to string type
-    
+    df1['GroupName'] = ''
     if league == 'AFL':
         for i in range(len(df1)):
             if df1['Group'][i] <= 6:
-                df1['Group'][i] = 'Scoring'
+                df1['GroupName'][i] = 'Scoring'
             elif df1['Group'][i] <= 15:
-                df1['Group'][i] = 'Possession'
+                df1['GroupName'][i] = 'Possession'
             elif df1['Group'][i] <= 21:
-                df1['Group'][i] = 'Marks'
+                df1['GroupName'][i] = 'Marks'
             elif df1['Group'][i] <= 30:
-                df1['Group'][i] = 'Defense'
+                df1['GroupName'][i] = 'Defense'
             elif df1['Group'][i] <= 33:
-                df1['Group'][i] = 'Bad'
+                df1['GroupName'][i] = 'Bad'
     if league != 'AFL':
         for i in range(len(df1)):
             if df1['Group'][i] <= 6:
-                df1['Group'][i] = 'Scoring'
+                df1['GroupName'][i] = 'Scoring'
             elif df1['Group'][i] <= 13:
-                df1['Group'][i] = 'Possession'
+                df1['GroupName'][i] = 'Possession'
             elif df1['Group'][i] <= 17:
-                df1['Group'][i] = 'Marks'
+                df1['GroupName'][i] = 'Marks'
             elif df1['Group'][i] <= 22:
-                df1['Group'][i] = 'Defense'
+                df1['GroupName'][i] = 'Defense'
             elif df1['Group'][i] <= 25:
-                df1['Group'][i] = 'Bad'
+                df1['GroupName'][i] = 'Bad'
 
 
     #####################################################################
@@ -463,7 +464,7 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
 
 
     # Grab the group values
-    GROUP = df1["Group"].values
+    GROUP = df1["GroupName"].values
     VALUES = df1["Value"].values
     LABELS = df1["Metric"].values
     OFFSET = np.pi / 2
@@ -622,18 +623,16 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
     opener.addheaders = [('User-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36')]
     urllib.request.install_opener(opener)
 
-    from PIL import Image
     urllib.request.urlretrieve(pic,"player_pic.png")
     image = Image.open('player_pic.png')
     newax = fig.add_axes([.42,.43,0.18,0.18], anchor='C', zorder=1)
     newax.imshow(image)
     newax.axis('off')
 
-    # urllib.request.urlretrieve(team_pic,'team_pic.png')
-    # image = Image.open('team_pic.png')
-    # newax = fig.add_axes([.15,.82,0.1,0.1], anchor='C', zorder=1)
-    # newax.imshow(image)
-    # newax.axis('off')
+    image = Image.open(urllib.request.urlopen(team_pic))
+    newax = fig.add_axes([.15,.82,0.1,0.1], anchor='C', zorder=1)
+    newax.imshow(image)
+    newax.axis('off')
 
     ######## League Logo Image ########
     if league == 'AFL':
