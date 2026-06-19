@@ -456,7 +456,7 @@ def scout_report(league, season, pos, mins, name,callout, bar_colors, dist_label
             elif df1['Group'][i] <= 25:
                 df1['GroupName'][i] = 'Bad'
 
-
+    st.dataframe(df1)
     #####################################################################
     
     ### This link below is where I base a lot of my radar code off of
