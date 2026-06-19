@@ -55,7 +55,7 @@ def make_season_metric_img(player_df, adj_80s, player, foc_var, league, season):
         title=alt.Title(
             text=f"{player} {foc_var} By Round, {season} {league}", fontSize=20,
             subtitle=adj_text, subtitleFontSize=15, align='left', anchor='start')
-    )
+    ).configure(background='#fbf9f4')
 
     return final_chart
 
